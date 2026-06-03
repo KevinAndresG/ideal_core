@@ -17,8 +17,10 @@ export function FeaturedProducts() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <span className="text-sage font-semibold text-sm tracking-widest uppercase">Lo mejor de CORE</span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-charcoal mt-2">
+          <span className="text-bloom font-semibold text-sm tracking-widest uppercase">
+            Lo mejor de CORE
+          </span>
+          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-ink mt-2">
             Productos Destacados
           </h2>
         </motion.div>
@@ -32,7 +34,7 @@ export function FeaturedProducts() {
           <Link href="/products">
             <motion.span
               whileHover={{ x: 4 }}
-              className="flex items-center gap-2 text-sage-dark font-semibold text-sm hover:text-charcoal transition-colors"
+              className="flex items-center gap-2 text-bloom-dark font-semibold text-sm hover:text-ink transition-colors cursor-pointer"
             >
               Ver todos
               <ArrowRight size={16} />
@@ -53,7 +55,10 @@ export function FeaturedProducts() {
         viewport={{ once: true }}
         className="sm:hidden text-center mt-8"
       >
-        <Link href="/products" className="clay-btn clay-btn-secondary inline-flex items-center gap-2">
+        <Link
+          href="/products"
+          className="petal-btn petal-btn-secondary inline-flex items-center gap-2"
+        >
           Ver todos los productos
           <ArrowRight size={16} />
         </Link>

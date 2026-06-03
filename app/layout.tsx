@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartSlider } from "@/components/layout/CartSlider";
 import { Toaster } from "sonner";
@@ -44,11 +43,12 @@ export default function RootLayout({
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "var(--surface)",
-              border: "2px solid var(--nav-border)",
-              borderRadius: "16px",
-              fontFamily: "Plus Jakarta Sans, system-ui, sans-serif",
-              color: "var(--color-charcoal)",
+              background: "var(--surface-solid)",
+              border: "1.5px solid rgba(196, 181, 253, 0.35)",
+              borderRadius: "18px",
+              fontFamily: "Inter, system-ui, sans-serif",
+              color: "var(--color-ink)",
+              boxShadow: "0 8px 32px rgba(139, 92, 246, 0.12)",
             },
           }}
         />

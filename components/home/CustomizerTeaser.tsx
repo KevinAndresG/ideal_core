@@ -7,17 +7,24 @@ import { Sparkles, ArrowRight, Check } from "lucide-react";
 const steps = [
   { emoji: "🧺", label: "Elige la base" },
   { emoji: "✨", label: "Agrega items" },
-  { emoji: "🎀", label: "Personaliza detalles" },
+  { emoji: "🎀", label: "Personaliza" },
   { emoji: "🚀", label: "¡Ordena!" },
 ];
 
 const floatingItems = [
-  { emoji: "🌹", x: "15%", y: "20%", delay: 0 },
+  { emoji: "🌹", x: "15%", y: "20%", delay: 0   },
   { emoji: "🍫", x: "75%", y: "15%", delay: 0.3 },
   { emoji: "🕯️", x: "10%", y: "65%", delay: 0.6 },
   { emoji: "🧸", x: "80%", y: "60%", delay: 0.9 },
   { emoji: "💌", x: "50%", y: "80%", delay: 0.4 },
   { emoji: "🎈", x: "35%", y: "10%", delay: 0.7 },
+];
+
+const features = [
+  "Sin costo de personalización",
+  "Precio en tiempo real",
+  "Entrega en 24-48h",
+  "+50 items disponibles",
 ];
 
 export function CustomizerTeaser() {
@@ -32,31 +39,39 @@ export function CustomizerTeaser() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-6"
-              style={{ background: "rgba(212,184,224,0.2)", border: "2px solid rgba(212,184,224,0.4)", color: "#7a50a0" }}>
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-6"
+              style={{
+                background: "rgba(237, 233, 254, 0.92)",
+                border: "1.5px solid rgba(139, 92, 246, 0.25)",
+                color: "var(--color-violet-dark)",
+              }}
+            >
               <Sparkles size={14} />
               Personalización en Vivo
             </div>
 
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-charcoal mb-6 leading-tight">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-ink mb-6 leading-tight">
               Arma tu ancheta{" "}
               <span className="italic text-gradient">perfecta</span>{" "}
               en tiempo real
             </h2>
 
-            <p className="text-charcoal/60 text-lg leading-relaxed mb-8">
+            <p className="text-ink/55 text-lg leading-relaxed mb-8">
               Usa nuestro personalizador interactivo para elegir cada detalle de tu regalo.
-              Ve cómo queda mientras lo construyes — ¡como si lo estuvieras armando tú mismo!
+              Ve cómo queda mientras lo construyes.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
-              {["Sin costo de personalización", "Precio en tiempo real", "Entrega en 24-48h", "+50 items disponibles"].map((feat) => (
+              {features.map((feat) => (
                 <div key={feat} className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(143,175,126,0.2)" }}>
-                    <Check size={12} className="text-sage-dark" />
+                  <div
+                    className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(110, 231, 183, 0.25)" }}
+                  >
+                    <Check size={11} className="text-mint-dark" />
                   </div>
-                  <span className="text-charcoal/70 text-sm">{feat}</span>
+                  <span className="text-ink/65 text-sm">{feat}</span>
                 </div>
               ))}
             </div>
@@ -65,12 +80,12 @@ export function CustomizerTeaser() {
             <div className="flex items-center gap-2 mb-8 flex-wrap">
               {steps.map((step, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <div className="clay-card clay-card-lavender flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm">
+                  <div className="petal-card petal-card-violet flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm">
                     <span>{step.emoji}</span>
-                    <span className="font-medium text-charcoal/70 text-xs">{step.label}</span>
+                    <span className="font-medium text-ink/65 text-xs">{step.label}</span>
                   </div>
                   {i < steps.length - 1 && (
-                    <ArrowRight size={14} className="text-charcoal/30 flex-shrink-0" />
+                    <ArrowRight size={14} className="text-ink/25 flex-shrink-0" />
                   )}
                 </div>
               ))}
@@ -80,7 +95,7 @@ export function CustomizerTeaser() {
               <motion.span
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="clay-btn clay-btn-primary inline-flex items-center gap-3 text-base px-8 py-4"
+                className="petal-btn petal-btn-primary inline-flex items-center gap-3 text-base px-8 py-4 cursor-pointer"
               >
                 <Sparkles size={18} />
                 ¡Armar mi Ancheta Ahora!
@@ -96,22 +111,20 @@ export function CustomizerTeaser() {
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="relative h-96 lg:h-[500px] rounded-4xl overflow-hidden"
+            <div
+              className="relative h-96 lg:h-[500px] overflow-hidden"
               style={{
-                background: "linear-gradient(135deg, #fae0cc 0%, #ead8f2 50%, #d8eacc 100%)",
                 borderRadius: "40px",
-              }}>
-
+                background: "linear-gradient(135deg, rgba(251,207,232,0.8) 0%, rgba(237,233,254,0.8) 50%, rgba(209,250,229,0.7) 100%)",
+              }}
+            >
               {/* Floating emoji items */}
               {floatingItems.map((item, i) => (
                 <motion.div
                   key={i}
                   className="absolute text-4xl select-none"
                   style={{ left: item.x, top: item.y }}
-                  animate={{
-                    y: [0, -15, 0],
-                    rotate: [0, 5, -5, 0],
-                  }}
+                  animate={{ y: [0, -15, 0], rotate: [0, 5, -5, 0] }}
                   transition={{
                     duration: 3 + i * 0.5,
                     delay: item.delay,
@@ -131,7 +144,9 @@ export function CustomizerTeaser() {
                   className="text-center"
                 >
                   <div className="text-9xl drop-shadow-2xl mb-2">🧺</div>
-                  <div className="clay-card clay-card-sage px-5 py-2.5 rounded-2xl text-sm font-semibold text-charcoal">
+                  <div
+                    className="petal-card petal-card-mint px-5 py-2.5 rounded-2xl text-sm font-semibold text-ink"
+                  >
                     ¡Tu ancheta aquí!
                   </div>
                 </motion.div>
@@ -142,9 +157,9 @@ export function CustomizerTeaser() {
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
                 className="absolute top-5 right-5 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold text-white"
-                style={{ background: "rgba(61,74,62,0.85)" }}
+                style={{ background: "rgba(232, 121, 160, 0.92)" }}
               >
-                <span className="w-2 h-2 rounded-full bg-rose animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                 EN VIVO
               </motion.div>
             </div>

@@ -20,7 +20,7 @@ export function CartSlider() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeCart}
-            className="fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-ink/35 backdrop-blur-sm"
           />
 
           {/* Drawer */}
@@ -33,19 +33,22 @@ export function CartSlider() {
             style={{ background: "var(--bg-base)" }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-sage/20">
+            <div className="flex items-center justify-between p-6 border-b border-bloom/15">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-sage/15">
-                  <ShoppingBag size={20} className="text-sage-dark" />
+                <div className="p-2 rounded-xl bg-bloom/10">
+                  <ShoppingBag size={20} className="text-bloom-dark" />
                 </div>
                 <div>
-                  <h2 className="font-semibold text-charcoal font-serif text-lg">Tu Carrito</h2>
-                  <p className="text-sm text-charcoal/50">{items.length} {items.length === 1 ? "producto" : "productos"}</p>
+                  <h2 className="font-semibold text-ink font-serif text-lg">Tu Carrito</h2>
+                  <p className="text-sm text-ink/45">
+                    {items.length} {items.length === 1 ? "producto" : "productos"}
+                  </p>
                 </div>
               </div>
               <button
                 onClick={closeCart}
-                className="p-2 rounded-xl hover:bg-sage/10 transition-colors text-charcoal/60 hover:text-charcoal"
+                aria-label="Cerrar carrito"
+                className="p-2 rounded-xl hover:bg-bloom/8 transition-colors text-ink/50 hover:text-ink cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -61,11 +64,13 @@ export function CartSlider() {
                     className="flex flex-col items-center justify-center h-64 gap-4"
                   >
                     <div className="text-6xl animate-float">🎁</div>
-                    <p className="text-charcoal/50 text-center">Tu carrito está vacío.<br />¡Agrega algo especial!</p>
+                    <p className="text-ink/45 text-center">
+                      Tu carrito está vacío.<br />¡Agrega algo especial!
+                    </p>
                     <Link
                       href="/products"
                       onClick={closeCart}
-                      className="clay-btn clay-btn-primary text-sm py-2.5 px-5"
+                      className="petal-btn petal-btn-primary text-sm py-2.5 px-5"
                     >
                       Ver Productos
                     </Link>
@@ -78,34 +83,36 @@ export function CartSlider() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 20, height: 0 }}
-                      className="clay-card p-4"
+                      className="petal-card p-4"
                     >
                       <div className="flex gap-3">
-                        {/* Emoji / image placeholder */}
-                        <div className="w-16 h-16 rounded-xl flex items-center justify-center text-3xl flex-shrink-0"
-                          style={{ background: "linear-gradient(135deg, #eef6e8, #d8eacc)" }}>
+                        <div
+                          className="w-16 h-16 rounded-xl flex items-center justify-center text-3xl flex-shrink-0"
+                          style={{ background: "var(--surface-violet)" }}
+                        >
                           {item.type === "custom" ? "🎁" : "✨"}
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-charcoal text-sm truncate">
+                          <p className="font-semibold text-ink text-sm truncate">
                             {item.type === "custom"
                               ? `Ancheta Custom: ${item.customConfig?.base.name}`
                               : item.product?.name}
                           </p>
                           {item.type === "custom" && item.customConfig && (
-                            <p className="text-xs text-charcoal/40 truncate">
+                            <p className="text-xs text-ink/40 truncate">
                               {item.customConfig.items.length} items · Lazo {item.customConfig.ribbonColor.name}
                             </p>
                           )}
-                          <p className="text-sage-dark font-semibold text-sm mt-1">
+                          <p className="text-bloom-dark font-semibold text-sm mt-1">
                             {formatPrice(item.unitPrice)}
                           </p>
                         </div>
 
                         <button
                           onClick={() => removeItem(item.id)}
-                          className="p-1.5 rounded-lg hover:bg-rose/20 text-charcoal/30 hover:text-rose-600 transition-colors flex-shrink-0"
+                          aria-label="Eliminar item"
+                          className="p-1.5 rounded-lg hover:bg-rose-light text-ink/30 hover:text-rose-600 transition-colors flex-shrink-0 cursor-pointer"
                         >
                           <Trash2 size={15} />
                         </button>
@@ -115,18 +122,20 @@ export function CartSlider() {
                       <div className="flex items-center gap-3 mt-3">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-7 h-7 rounded-lg bg-sage/10 hover:bg-sage/20 flex items-center justify-center transition-colors"
+                          aria-label="Reducir cantidad"
+                          className="w-7 h-7 rounded-lg bg-bloom/8 hover:bg-bloom/18 flex items-center justify-center transition-colors cursor-pointer"
                         >
                           <Minus size={13} />
                         </button>
                         <span className="text-sm font-semibold w-6 text-center">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-7 h-7 rounded-lg bg-sage/10 hover:bg-sage/20 flex items-center justify-center transition-colors"
+                          aria-label="Aumentar cantidad"
+                          className="w-7 h-7 rounded-lg bg-bloom/8 hover:bg-bloom/18 flex items-center justify-center transition-colors cursor-pointer"
                         >
                           <Plus size={13} />
                         </button>
-                        <span className="ml-auto text-sm font-semibold text-charcoal">
+                        <span className="ml-auto text-sm font-semibold text-ink">
                           {formatPrice(item.unitPrice * item.quantity)}
                         </span>
                       </div>
@@ -138,16 +147,18 @@ export function CartSlider() {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="p-5 border-t border-sage/20 space-y-4">
+              <div className="p-5 border-t border-bloom/12 space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-charcoal/60 text-sm">Subtotal</span>
-                  <span className="font-bold text-charcoal text-lg">{formatPrice(cartTotal)}</span>
+                  <span className="text-ink/55 text-sm">Subtotal</span>
+                  <span className="font-bold text-ink text-lg">{formatPrice(cartTotal)}</span>
                 </div>
-                <p className="text-xs text-charcoal/40 text-center">Envío calculado al confirmar el pedido</p>
+                <p className="text-xs text-ink/35 text-center">
+                  Envío calculado al confirmar el pedido
+                </p>
                 <Link
                   href="/checkout"
                   onClick={closeCart}
-                  className="clay-btn clay-btn-primary w-full justify-center"
+                  className="petal-btn petal-btn-primary w-full justify-center"
                 >
                   Finalizar Pedido
                   <ArrowRight size={18} />
@@ -155,7 +166,7 @@ export function CartSlider() {
                 <Link
                   href="/cart"
                   onClick={closeCart}
-                  className="block text-center text-sm text-charcoal/50 hover:text-charcoal transition-colors"
+                  className="block text-center text-sm text-ink/40 hover:text-ink transition-colors"
                 >
                   Ver carrito completo
                 </Link>

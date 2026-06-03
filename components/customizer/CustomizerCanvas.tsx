@@ -20,33 +20,41 @@ export function CustomizerCanvas() {
   return (
     <div className="flex flex-col h-full gap-4">
       {/* Canvas area */}
-      <div className="flex-1 relative rounded-3xl overflow-hidden min-h-[420px]"
+      <div
+        className="flex-1 relative rounded-3xl overflow-hidden min-h-[420px]"
         style={{
-          background: `linear-gradient(135deg, ${ribbonColor.color}22 0%, #f9f0e1 50%, ${base.color}22 100%)`,
-          border: `3px solid ${ribbonColor.color}66`,
-          boxShadow: `0 20px 60px ${ribbonColor.color}44, 0 8px 0 0 ${ribbonColor.color}44`,
+          background: `linear-gradient(135deg, ${ribbonColor.color}20 0%, rgba(253, 230, 138, 0.15) 50%, ${base.color}20 100%)`,
+          border: `2px solid ${ribbonColor.color}55`,
+          boxShadow: `0 16px 48px ${ribbonColor.color}30, 0 4px 12px rgba(0,0,0,0.04)`,
         }}
       >
         {/* Background decorative circles */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-4 left-4 w-24 h-24 rounded-full opacity-20"
-            style={{ background: ribbonColor.color, filter: "blur(20px)" }} />
-          <div className="absolute bottom-4 right-4 w-32 h-32 rounded-full opacity-15"
-            style={{ background: base.color, filter: "blur(25px)" }} />
+          <div
+            className="absolute top-4 left-4 w-24 h-24 rounded-full opacity-20"
+            style={{ background: ribbonColor.color, filter: "blur(24px)" }}
+          />
+          <div
+            className="absolute bottom-4 right-4 w-32 h-32 rounded-full opacity-15"
+            style={{ background: base.color, filter: "blur(28px)" }}
+          />
         </div>
 
         {/* Rotate button */}
         <button
           onClick={() => setRotated(!rotated)}
-          className="absolute top-4 right-4 z-20 p-2.5 rounded-xl glass-card text-charcoal/60 hover:text-charcoal transition-all hover:scale-105"
+          aria-label="Rotar vista"
+          className="absolute top-4 right-4 z-20 p-2.5 rounded-xl petal-card text-ink/55 hover:text-ink transition-all hover:scale-105 cursor-pointer"
         >
           <RotateCcw size={16} />
         </button>
 
         {/* Live badge */}
-        <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white"
-          style={{ background: "rgba(61,74,62,0.8)" }}>
-          <span className="w-1.5 h-1.5 rounded-full bg-rose animate-pulse" />
+        <div
+          className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white"
+          style={{ background: "rgba(232, 121, 160, 0.92)" }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
           EN VIVO
         </div>
 
@@ -67,14 +75,16 @@ export function CustomizerCanvas() {
             >
               <div className="text-center">
                 <span className="text-8xl drop-shadow-2xl block">{base.emoji}</span>
-                <div className="mt-1 px-4 py-1 rounded-full text-xs font-semibold text-charcoal/60"
-                  style={{ background: `${base.color}44` }}>
+                <div
+                  className="mt-1 px-4 py-1 rounded-full text-xs font-semibold text-ink/60"
+                  style={{ background: `${base.color}35` }}
+                >
                   {base.name}
                 </div>
               </div>
             </motion.div>
 
-            {/* Items floating around the base */}
+            {/* Items floating */}
             <AnimatePresence>
               {items.map((item, idx) => {
                 const pos = itemPositions[idx % itemPositions.length];
@@ -127,7 +137,7 @@ export function CustomizerCanvas() {
               exit={{ opacity: 0, y: 10 }}
               className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20"
             >
-              <div className="px-4 py-2 rounded-xl text-xs font-semibold text-charcoal bg-white/90 backdrop-blur-sm border border-sage/20 shadow-sm whitespace-nowrap max-w-48 truncate">
+              <div className="px-4 py-2 rounded-xl text-xs font-semibold text-ink bg-surface backdrop-blur-sm border border-bloom/15 shadow-sm whitespace-nowrap max-w-48 truncate">
                 💌 {label}
               </div>
             </motion.div>
@@ -137,31 +147,31 @@ export function CustomizerCanvas() {
         {/* Empty state */}
         {items.length === 0 && (
           <div className="absolute bottom-12 left-0 right-0 text-center pointer-events-none">
-            <p className="text-charcoal/30 text-sm">Agrega items desde el panel izquierdo ✨</p>
+            <p className="text-ink/30 text-sm">Agrega items desde el panel izquierdo ✨</p>
           </div>
         )}
       </div>
 
       {/* Summary */}
-      <div className="clay-card clay-card-sage p-4 rounded-2xl">
+      <div className="petal-card petal-card-mint p-4 rounded-2xl">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-charcoal">Resumen</span>
-          <span className="text-xs text-charcoal/40">{items.length} items</span>
+          <span className="text-sm font-semibold text-ink">Resumen</span>
+          <span className="text-xs text-ink/40">{items.length} items</span>
         </div>
         <div className="flex flex-wrap gap-1 mb-3">
           {items.length === 0 ? (
-            <span className="text-xs text-charcoal/40">Sin items aún</span>
+            <span className="text-xs text-ink/40">Sin items aún</span>
           ) : (
             items.map((item, i) => (
-              <span key={`sum-${i}`} className="text-xl" title={item.name}>{item.emoji}</span>
+              <span key={`sum-${i}`} className="text-xl" title={item.name}>
+                {item.emoji}
+              </span>
             ))
           )}
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-xs text-charcoal/50">Lazo: {ribbonColor.name}</span>
-          <span className="font-bold text-charcoal text-sm">
-            Base: {base.name}
-          </span>
+          <span className="text-xs text-ink/45">Lazo: {ribbonColor.name}</span>
+          <span className="font-bold text-ink text-sm">Base: {base.name}</span>
         </div>
       </div>
     </div>

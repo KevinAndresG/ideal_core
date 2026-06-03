@@ -9,7 +9,7 @@ export function Footer() {
     <footer
       className="relative overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #3e6d80c5 0%, #7bc0c9de 100%)",
+        background: "linear-gradient(160deg, #1E0B34 0%, #2D1057 60%, #1A0B2E 100%)",
       }}
     >
       {/* Wave top */}
@@ -18,7 +18,7 @@ export function Footer() {
           viewBox="0 0 1200 80"
           preserveAspectRatio="none"
           className="w-full h-16"
-          fill="#fdf8f3"
+          fill="var(--bg-soft)"
         >
           <path d="M0,40 C300,80 900,0 1200,40 L1200,80 L0,80 Z" />
         </svg>
@@ -42,13 +42,15 @@ export function Footer() {
             <div className="flex gap-3 mt-5">
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-white/70 hover:text-white"
+                aria-label="Compartir"
+                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-white/70 hover:text-white cursor-pointer"
               >
                 <Share2 size={18} />
               </a>
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-white/70 hover:text-white"
+                aria-label="Enlace externo"
+                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-white/70 hover:text-white cursor-pointer"
               >
                 <ExternalLink size={18} />
               </a>
@@ -59,17 +61,11 @@ export function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Productos</h4>
             <ul className="space-y-2">
-              {[
-                "Anchetas",
-                "Flores Preservadas",
-                "Velas Artesanales",
-                "Sets",
-                "Decoraciones",
-              ].map((item) => (
+              {["Anchetas", "Flores Preservadas", "Velas Artesanales", "Sets", "Decoraciones"].map((item) => (
                 <li key={item}>
                   <Link
                     href="/products"
-                    className="text-white/65 hover:text-white text-sm transition-colors"
+                    className="text-white/60 hover:text-white text-sm transition-colors"
                   >
                     {item}
                   </Link>
@@ -82,15 +78,15 @@ export function Footer() {
             <h4 className="text-white font-semibold mb-4">Empresa</h4>
             <ul className="space-y-2">
               {[
-                { label: "Nosotros", href: "/about" },
+                { label: "Nosotros",    href: "/about" },
                 { label: "Personalizar", href: "/customize" },
-                { label: "Blog", href: "#" },
-                { label: "Contacto", href: "#" },
+                { label: "Blog",         href: "#" },
+                { label: "Contacto",     href: "#" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-white/65 hover:text-white text-sm transition-colors"
+                    className="text-white/60 hover:text-white text-sm transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -102,21 +98,19 @@ export function Footer() {
           {/* Newsletter */}
           <div>
             <h4 className="text-white font-semibold mb-4">Newsletter</h4>
-            <p className="text-white/65 text-sm mb-4">
+            <p className="text-white/60 text-sm mb-4">
               Recibe ideas de regalo e inspiración cada semana.
             </p>
-            <form
-              className="flex flex-col gap-2"
-              onSubmit={(e) => e.preventDefault()}
-            >
+            <form className="flex flex-col gap-2" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="tu@email.com"
-                className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm outline-none focus:border-sage/60 transition-colors"
+                aria-label="Email para newsletter"
+                className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm outline-none focus:border-petal/60 transition-colors"
               />
               <button
                 type="submit"
-                className="clay-btn clay-btn-primary text-sm py-2.5"
+                className="petal-btn petal-btn-primary text-sm py-2.5 w-full justify-center cursor-pointer"
               >
                 Suscribirme
               </button>
@@ -129,8 +123,7 @@ export function Footer() {
             © {new Date().getFullYear()} CORE. Todos los derechos reservados.
           </p>
           <p className="text-white/40 text-xs flex items-center gap-1">
-            Hecho con <Heart size={12} className="text-rose fill-rose" /> en
-            Colombia
+            Hecho con <Heart size={12} className="text-rose fill-rose mx-0.5" /> en Colombia
           </p>
         </div>
       </div>

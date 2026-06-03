@@ -11,18 +11,18 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Inicio" },
-  { href: "/products", label: "Productos" },
+  { href: "/",          label: "Inicio" },
+  { href: "/products",  label: "Productos" },
   { href: "/customize", label: "✨ Personalizar" },
-  { href: "/about", label: "Nosotros" },
+  { href: "/about",     label: "Nosotros" },
 ];
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const pathname = usePathname();
-  const { openCart, itemCount } = useCartStore();
-  const count = itemCount();
+  const [scrolled, setScrolled]       = useState(false);
+  const [mobileOpen, setMobileOpen]   = useState(false);
+  const pathname                       = usePathname();
+  const { openCart, itemCount }        = useCartStore();
+  const count                          = itemCount();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -41,11 +41,7 @@ export function Navbar() {
           scrolled ? "sm:top-2" : "sm:top-5",
         )}
       >
-        <nav
-          className={cn(
-            "nav-pill max-w-5xl mx-auto flex items-center justify-between rounded-[28px] sm:rounded-full transition-all duration-300 py-2.5 px-4 sm:px-5",
-          )}
-        >
+        <nav className="aurora-nav max-w-5xl mx-auto flex items-center justify-between rounded-[28px] sm:rounded-full py-2.5 px-4 sm:px-5">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group pl-1">
             <motion.div
@@ -73,12 +69,12 @@ export function Navbar() {
                     <motion.span
                       whileHover={{ y: -2 }}
                       className={cn(
-                        "inline-block px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+                        "inline-block px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer",
                         link.href === "/customize"
-                          ? "bg-gradient-to-r from-sage to-sage-dark text-white shadow-md shadow-sage/30 hover:shadow-lg hover:shadow-sage/40"
+                          ? "bg-gradient-to-r from-bloom to-violet text-white shadow-md shadow-bloom/25 hover:shadow-lg hover:shadow-bloom/35"
                           : active
-                            ? "bg-sage/15 text-sage-dark font-semibold"
-                            : "text-charcoal hover:bg-sage/10 hover:text-sage-dark",
+                            ? "bg-bloom/12 text-bloom-dark font-semibold"
+                            : "text-ink hover:bg-bloom/8 hover:text-bloom-dark",
                       )}
                     >
                       {link.label}
@@ -97,9 +93,10 @@ export function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={openCart}
-              className="relative p-2.5 rounded-2xl bg-sage/10 hover:bg-sage/20 transition-colors"
+              aria-label="Abrir carrito"
+              className="relative p-2.5 rounded-2xl bg-bloom/8 hover:bg-bloom/15 transition-colors cursor-pointer"
             >
-              <ShoppingBag size={18} className="text-charcoal" />
+              <ShoppingBag size={18} className="text-ink" />
               <AnimatePresence>
                 {count > 0 && (
                   <motion.span
@@ -107,7 +104,7 @@ export function Navbar() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-sage-dark text-white text-xs font-bold rounded-full flex items-center justify-center"
+                    className="absolute -top-1 -right-1 w-5 h-5 bg-bloom text-white text-xs font-bold rounded-full flex items-center justify-center"
                   >
                     {count > 9 ? "9+" : count}
                   </motion.span>
@@ -118,7 +115,8 @@ export function Navbar() {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2.5 rounded-2xl bg-sage/10 hover:bg-sage/20 transition-colors text-charcoal"
+              aria-label="Menú"
+              className="md:hidden p-2.5 rounded-2xl bg-bloom/8 hover:bg-bloom/15 transition-colors text-ink cursor-pointer"
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </motion.button>
@@ -126,7 +124,7 @@ export function Navbar() {
         </nav>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -134,7 +132,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="fixed top-[72px] left-3 right-3 z-40 nav-pill rounded-3xl p-3 md:hidden"
+            className="fixed top-[72px] left-3 right-3 z-40 aurora-nav rounded-3xl p-3 md:hidden"
           >
             <ul className="flex flex-col gap-1">
               {navLinks.map((link, i) => (
@@ -148,12 +146,12 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      "block px-4 py-3 rounded-2xl font-medium transition-all",
+                      "block px-4 py-3 rounded-2xl font-medium transition-all cursor-pointer",
                       link.href === "/customize"
-                        ? "bg-gradient-to-r from-sage to-sage-dark text-white"
+                        ? "bg-gradient-to-r from-bloom to-violet text-white"
                         : pathname === link.href
-                          ? "bg-sage/15 text-sage-dark"
-                          : "text-charcoal hover:bg-sage/10",
+                          ? "bg-bloom/12 text-bloom-dark"
+                          : "text-ink hover:bg-bloom/8",
                     )}
                   >
                     {link.label}

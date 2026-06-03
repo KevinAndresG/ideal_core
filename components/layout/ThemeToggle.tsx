@@ -20,7 +20,7 @@ export function ThemeToggle() {
       whileTap={{ scale: 0.9, rotate: 180 }}
       onClick={toggle}
       aria-label={isDark ? "Activar modo claro" : "Activar modo oscuro"}
-      className="relative p-2.5 rounded-2xl bg-sage/10 hover:bg-sage/20 transition-colors text-charcoal overflow-hidden"
+      className="relative p-2.5 rounded-2xl bg-bloom/8 hover:bg-bloom/15 transition-colors text-ink overflow-hidden cursor-pointer"
     >
       <motion.span
         key={theme}
