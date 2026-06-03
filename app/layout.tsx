@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
+// import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartSlider } from "@/components/layout/CartSlider";
 import { Toaster } from "sonner";
+import { Navbar } from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
-  title: "CORE — Regalos Personalizados con Amor",
-  description: "Anchetas, flores preservadas, velas artesanales y decoraciones únicas hechas a mano. Personaliza cada detalle y regala algo CORE.",
-  keywords: ["regalos", "anchetas", "personalizado", "artesanal", "flores", "velas", "manualidades"],
+  title: "Ideal Core Regalos Personalizados con Amor",
+  description:
+    "Regala algo único. Regala algo CORE. Anchetas, flores preservadas, velas artesanales y decoraciones únicas hechas a mano. Personaliza cada detalle y regala algo CORE.",
+  keywords: [
+    "regalos",
+    "anchetas",
+    "personalizado",
+    "artesanal",
+    "flores",
+    "velas",
+    "manualidades",
+  ],
 };
 
 export default function RootLayout({

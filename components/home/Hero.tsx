@@ -61,16 +61,23 @@ export function Hero() {
           }}
           initial={{ opacity: 0, scale: 0, rotate: -15 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 + item.delay * 0.2, type: "spring" }}
+          transition={{
+            duration: 0.8,
+            delay: 0.3 + item.delay * 0.2,
+            type: "spring",
+          }}
         >
-          <span className="animate-float block drop-shadow-lg" style={{ animationDelay: `${item.delay}s` }}>
+          <span
+            className="animate-float block drop-shadow-lg"
+            style={{ animationDelay: `${item.delay}s` }}
+          >
             {item.emoji}
           </span>
         </motion.div>
       ))}
 
       {/* Main content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 text-center mt-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,11 +99,9 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.4 }}
           className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-charcoal mb-6"
         >
-          Regala algo{" "}
-          <span className="italic text-gradient">único.</span>
+          Regala algo <span className="italic text-gradient">único.</span>
           <br />
-          Regala algo{" "}
-          <span className="font-black text-gradient">CORE.</span>
+          Regala algo <span className="font-black text-gradient">CORE.</span>
         </motion.h1>
 
         <motion.p
@@ -106,7 +111,8 @@ export function Hero() {
           className="text-charcoal/60 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           Anchetas personalizadas, flores preservadas y manualidades únicas.{" "}
-          <strong className="text-charcoal/80">Arma tu regalo en vivo</strong> y ve cómo queda antes de ordenarlo.
+          <strong className="text-charcoal/80">Arma tu regalo en vivo</strong> y
+          ve cómo queda antes de ordenarlo.
         </motion.p>
 
         <motion.div
@@ -149,7 +155,9 @@ export function Hero() {
             { value: "100%", label: "Hecho a mano" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-serif font-bold text-2xl text-charcoal">{stat.value}</div>
+              <div className="font-serif font-bold text-2xl text-charcoal">
+                {stat.value}
+              </div>
               <div className="text-charcoal/50 text-sm">{stat.label}</div>
             </div>
           ))}

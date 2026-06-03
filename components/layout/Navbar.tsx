@@ -36,17 +36,22 @@ export function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-3 sm:top-5 left-0 right-0 z-50 px-3 sm:px-6"
+        className={cn(
+          "fixed top-3 left-0 right-0 z-50 px-3 sm:px-6 transition-all duration-200",
+          scrolled ? "sm:top-2" : "sm:top-5",
+        )}
       >
         <nav
           className={cn(
-            "nav-pill max-w-5xl mx-auto flex items-center justify-between rounded-[28px] sm:rounded-full transition-all duration-300",
-            scrolled ? "py-2 px-3 sm:px-4" : "py-2.5 px-4 sm:px-5"
+            "nav-pill max-w-5xl mx-auto flex items-center justify-between rounded-[28px] sm:rounded-full transition-all duration-300 py-2.5 px-4 sm:px-5",
           )}
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group pl-1">
-            <motion.div whileHover={{ rotate: [-2, 2, -2, 0], scale: 1.05 }} transition={{ duration: 0.4 }}>
+            <motion.div
+              whileHover={{ rotate: [-2, 2, -2, 0], scale: 1.05 }}
+              transition={{ duration: 0.4 }}
+            >
               <Image
                 src="/logo.png"
                 alt="CORE"
@@ -72,8 +77,8 @@ export function Navbar() {
                         link.href === "/customize"
                           ? "bg-gradient-to-r from-sage to-sage-dark text-white shadow-md shadow-sage/30 hover:shadow-lg hover:shadow-sage/40"
                           : active
-                          ? "bg-sage/15 text-sage-dark font-semibold"
-                          : "text-charcoal hover:bg-sage/10 hover:text-sage-dark"
+                            ? "bg-sage/15 text-sage-dark font-semibold"
+                            : "text-charcoal hover:bg-sage/10 hover:text-sage-dark",
                       )}
                     >
                       {link.label}
@@ -147,8 +152,8 @@ export function Navbar() {
                       link.href === "/customize"
                         ? "bg-gradient-to-r from-sage to-sage-dark text-white"
                         : pathname === link.href
-                        ? "bg-sage/15 text-sage-dark"
-                        : "text-charcoal hover:bg-sage/10"
+                          ? "bg-sage/15 text-sage-dark"
+                          : "text-charcoal hover:bg-sage/10",
                     )}
                   >
                     {link.label}
