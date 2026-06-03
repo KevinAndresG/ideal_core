@@ -329,8 +329,9 @@ body {
 /* Reduce motion for users who request it */
 @media (prefers-reduced-motion: reduce) {
   .animate-float, .animate-float-slow, .animate-blob,
-  .animate-marquee, .animate-pulse-glow, .animate-spin-slow,
+  .animate-pulse-glow, .animate-spin-slow,
   .animate-aurora-drift { animation: none; }
+  /* .animate-marquee kept — JS-driven via Framer Motion now */
 }
 
 /* ── Typography ── */
