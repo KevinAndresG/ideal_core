@@ -20,11 +20,13 @@ const navLinks = [
 export function Navbar() {
   const [scrolled, setScrolled]       = useState(false);
   const [mobileOpen, setMobileOpen]   = useState(false);
+  const [mounted, setMounted]         = useState(false);
   const pathname                       = usePathname();
   const { openCart, itemCount }        = useCartStore();
-  const count                          = itemCount();
+  const count                          = mounted ? itemCount() : 0;
 
   useEffect(() => {
+    setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);

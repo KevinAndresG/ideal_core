@@ -1,9 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { CartSlider } from "@/components/layout/CartSlider";
 import { Toaster } from "sonner";
 import { Navbar } from "@/components/layout/Navbar";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Ideal Core Regalos Personalizados con Amor",
@@ -28,13 +36,11 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('core-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`,
-          }}
-        />
+        <Script id="core-theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem('core-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`}
+        </Script>
       </head>
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col overflow-x-hidden">
         <Navbar />
         <CartSlider />
         <main className="flex-1">{children}</main>
