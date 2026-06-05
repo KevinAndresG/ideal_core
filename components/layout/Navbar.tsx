@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { href: "/",          label: "Inicio" },
   { href: "/products",  label: "Productos" },
-  { href: "/customize", label: "✨ Personalizar" },
+  { href: "/customize", label: "Personalizar · Pronto" },
   { href: "/about",     label: "Nosotros" },
 ];
 
@@ -71,7 +71,7 @@ export function Navbar() {
                       className={cn(
                         "inline-block px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer",
                         link.href === "/customize"
-                          ? "bg-gradient-to-r from-bloom to-violet text-white shadow-md shadow-bloom/25 hover:shadow-lg hover:shadow-bloom/35"
+                          ? "bg-violet/12 text-violet-dark font-medium border border-violet/25"
                           : active
                             ? "bg-bloom/12 text-bloom-dark font-semibold"
                             : "text-ink hover:bg-bloom/8 hover:text-bloom-dark",
@@ -148,7 +148,7 @@ export function Navbar() {
                     className={cn(
                       "block px-4 py-3 rounded-2xl font-medium transition-all cursor-pointer",
                       link.href === "/customize"
-                        ? "bg-gradient-to-r from-bloom to-violet text-white"
+                        ? "bg-violet/12 text-violet-dark border border-violet/25"
                         : pathname === link.href
                           ? "bg-bloom/12 text-bloom-dark"
                           : "text-ink hover:bg-bloom/8",

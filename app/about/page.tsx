@@ -117,10 +117,10 @@ export default function AboutPage() {
               Un regalo puede cambiar un día entero
             </h2>
             <p className="text-ink/55 leading-relaxed mb-4">
-              CORE nació en 2022 en Bogotá, cuando Valentina decidió convertir
+              CORE nació en Medellin, cuando Kevin y Sara decidieron convertir
               su pasión por las manualidades en algo que pudiera generar
               emociones reales. Lo que comenzó como regalos para amigos y
-              familia, se convirtió en una marca que hoy llega a toda Colombia.
+              familia, se convirtió en una marca que quiere inspirar.
             </p>
             <p className="text-ink/55 leading-relaxed mb-6">
               Creemos que cada regalo es una oportunidad para expresar lo que a
@@ -129,7 +129,7 @@ export default function AboutPage() {
             </p>
             <div className="flex gap-6">
               {[
-                { value: "+2.500", label: "Regalos" },
+                { value: "+500", label: "Regalos" },
                 { value: "4.9★", label: "Calificación" },
                 { value: "3 años", label: "Experiencia" },
               ].map((s) => (

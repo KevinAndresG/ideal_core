@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ShoppingBag, Star, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useCartStore } from "@/lib/store/cart";
@@ -9,21 +10,13 @@ import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/lib/data/products";
 
 const categoryGradients: Record<string, string> = {
-  anchetas:    "from-peach-light to-peach",
-  flores:      "from-rose-light to-rose",
-  velas:       "from-violet-light to-lilac",
-  decoraciones:"from-sky-light to-sky",
-  sets:        "from-mist-dark to-butter-light",
-  manualidades:"from-mint-light to-mint",
+  anchetas: "from-peach-light to-peach",
+  bouquets: "from-rose-light to-rose",
 };
 
 const categoryBadgeColors: Record<string, string> = {
-  anchetas:    "bg-peach/20 text-orange-700",
-  flores:      "bg-rose-light text-rose-700",
-  velas:       "bg-violet-light text-violet-dark",
-  decoraciones:"bg-sky-light text-sky-700",
-  sets:        "bg-butter-light text-yellow-700",
-  manualidades:"bg-mint-light text-mint-dark",
+  anchetas: "bg-peach/20 text-orange-700",
+  bouquets: "bg-rose-light text-rose-700",
 };
 
 interface ProductCardProps {
@@ -36,22 +29,34 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    addItem({ type: "product", product, quantity: 1, unitPrice: product.price });
+    addItem({
+      type: "product",
+      product,
+      quantity: 1,
+      unitPrice: product.price,
+    });
     toast.success(`¡${product.name} agregado! 🎁`, {
       description: `${formatPrice(product.price)} · ${product.category}`,
     });
     openCart();
   };
 
-  const gradientClass = categoryGradients[product.category] ?? "from-mist-dark to-butter-light";
-  const badgeClass    = categoryBadgeColors[product.category] ?? "bg-mist-dark text-ink";
+  const gradientClass =
+    categoryGradients[product.category] ?? "from-mist-dark to-butter-light";
+  const badgeClass =
+    categoryBadgeColors[product.category] ?? "bg-mist-dark text-ink";
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: index * 0.07, type: "spring", stiffness: 200 }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.07,
+        type: "spring",
+        stiffness: 200,
+      }}
     >
       <Link href={`/products/${product.slug}`}>
         <motion.div
@@ -60,25 +65,38 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           className="petal-card group overflow-hidden cursor-pointer"
         >
           {/* Image area */}
-          <div className={`relative h-52 bg-gradient-to-br ${gradientClass} flex items-center justify-center overflow-hidden`}>
-            <motion.span
-              className="text-7xl select-none drop-shadow-lg"
-              whileHover={{ scale: 1.22, rotate: 6 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              {product.category === "anchetas"     ? "🎁"  :
-               product.category === "flores"       ? "🌸"  :
-               product.category === "velas"        ? "🕯️" :
-               product.category === "decoraciones" ? "✨"  :
-               product.category === "sets"         ? "💝"  :
-               product.category === "manualidades" ? "🎨"  : "🎁"}
-            </motion.span>
+          <div
+            className={`relative h-52 bg-gradient-to-br ${gradientClass} flex items-center justify-center overflow-hidden`}
+          >
+            {product.images[0] ? (
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                loading={index < 4 ? "eager" : "lazy"}
+                priority={index < 4}
+              />
+            ) : (
+              <motion.span
+                className="text-7xl select-none drop-shadow-lg"
+                whileHover={{ scale: 1.22, rotate: 6 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                {product.category === "bouquets" ? "💐" : "🎁"}
+              </motion.span>
+            )}
 
             {/* Badges */}
             <div className="absolute top-3 left-3 flex flex-col gap-1.5">
               {product.originalPrice && (
                 <span className={`petal-badge ${badgeClass}`}>
-                  -{Math.round((1 - product.price / product.originalPrice) * 100)}%
+                  -
+                  {Math.round(
+                    (1 - product.price / product.originalPrice) * 100,
+                  )}
+                  %
                 </span>
               )}
               {product.featured && (
@@ -116,12 +134,16 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             </h3>
             <div className="flex items-center gap-1 mt-1.5">
               <Star size={12} className="text-peach fill-peach" />
-              <span className="text-xs text-ink/55 font-medium">{product.rating}</span>
+              <span className="text-xs text-ink/55 font-medium">
+                {product.rating}
+              </span>
               <span className="text-xs text-ink/35">({product.reviews})</span>
             </div>
             <div className="flex items-center justify-between mt-3">
               <div>
-                <span className="font-bold text-ink">{formatPrice(product.price)}</span>
+                <span className="font-bold text-ink">
+                  {formatPrice(product.price)}
+                </span>
                 {product.originalPrice && (
                   <span className="text-ink/30 text-xs line-through ml-2">
                     {formatPrice(product.originalPrice)}

@@ -7,17 +7,35 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 // 4 items max — 8 simultaneous CSS animations kill scroll perf
 const floatingItems = [
-  { emoji: "🌹", top: "15%", left: "8%",    delay: 0,   size: "text-4xl" },
-  { emoji: "🎁", top: "20%", right: "6%",   delay: 0.5, size: "text-5xl" },
-  { emoji: "🌸", top: "50%", right: "8%",   delay: 1.2, size: "text-4xl" },
+  { emoji: "🌹", top: "15%", left: "8%", delay: 0, size: "text-4xl" },
+  { emoji: "🎁", top: "20%", right: "6%", delay: 0.5, size: "text-5xl" },
+  { emoji: "🌸", top: "50%", right: "8%", delay: 1.2, size: "text-4xl" },
   { emoji: "🧸", bottom: "22%", right: "12%", delay: 0.8, size: "text-4xl" },
 ];
 
 // 3 blobs max, smaller, less blur
 const blobs = [
-  { color: "rgba(249, 168, 212, 0.48)", top: "-8%",   left: "-5%",   size: 480, delay: 0 },
-  { color: "rgba(196, 181, 253, 0.45)", top: "20%",   right: "-8%",  size: 420, delay: 2 },
-  { color: "rgba(110, 231, 183, 0.38)", bottom: "-12%", left: "18%", size: 360, delay: 1 },
+  {
+    color: "rgba(249, 168, 212, 0.48)",
+    top: "-8%",
+    left: "-5%",
+    size: 480,
+    delay: 0,
+  },
+  {
+    color: "rgba(196, 181, 253, 0.45)",
+    top: "20%",
+    right: "-8%",
+    size: 420,
+    delay: 2,
+  },
+  {
+    color: "rgba(110, 231, 183, 0.38)",
+    bottom: "-12%",
+    left: "18%",
+    size: 360,
+    delay: 1,
+  },
 ];
 
 function MagneticButton({
@@ -84,7 +102,11 @@ export function Hero() {
           }}
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.8, delay: blob.delay * 0.25, ease: "easeOut" }}
+          transition={{
+            duration: 1.8,
+            delay: blob.delay * 0.25,
+            ease: "easeOut",
+          }}
         />
       ))}
 
@@ -101,7 +123,11 @@ export function Hero() {
           }}
           initial={{ opacity: 0, scale: 0, rotate: -15 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 + item.delay * 0.2, type: "spring" }}
+          transition={{
+            duration: 0.8,
+            delay: 0.4 + item.delay * 0.2,
+            type: "spring",
+          }}
         >
           <span
             className="animate-float block drop-shadow-lg"
@@ -137,8 +163,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.4 }}
           className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-ink mb-6"
         >
-          Regala algo{" "}
-          <span className="italic text-gradient">único.</span>
+          Regala algo <span className="italic text-gradient">único.</span>
           <br />
           Regala algo{" "}
           <span className="font-black text-gradient-aurora">CORE.</span>
@@ -149,11 +174,11 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-ink/55 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-ink/55 text-lg sm:text-xl max-w-2xl mx-auto mb-5 leading-relaxed"
         >
           Anchetas personalizadas, flores preservadas y manualidades únicas.{" "}
-          <strong className="text-ink/75">Arma tu regalo en vivo</strong> y
-          ve cómo queda antes de ordenarlo.
+          <strong className="text-ink/75">Arma tu regalo en vivo</strong> y ve
+          cómo queda antes de ordenarlo.
         </motion.p>
 
         {/* CTAs with magnetic effect */}
@@ -173,10 +198,10 @@ export function Hero() {
 
           <MagneticButton
             href="/customize"
-            className="petal-btn petal-btn-primary inline-flex items-center gap-2 text-base px-8 py-4 cursor-pointer animate-pulse-glow"
+            className="petal-btn petal-btn-primary inline-flex items-center gap-2 text-base px-8 py-4 cursor-pointer"
           >
             <Sparkles size={18} />
-            Armar mi Ancheta
+            Personalizar · Pronto
           </MagneticButton>
         </motion.div>
 
@@ -185,12 +210,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.0 }}
-          className="flex flex-wrap justify-center gap-10 mt-16"
+          className="flex flex-wrap justify-center gap-10 mt-10"
         >
           {[
-            { value: "+2.500", label: "Regalos enviados" },
-            { value: "4.9★",  label: "Calificación promedio" },
-            { value: "100%",  label: "Hecho a mano" },
+            { value: "+500", label: "Regalos enviados" },
+            { value: "4.9★", label: "Calificación promedio" },
+            { value: "100%", label: "Hecho a mano" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="font-serif font-bold text-2xl text-gradient">

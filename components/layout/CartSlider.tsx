@@ -1,10 +1,10 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ShoppingBag, Plus, Minus, Trash2, ArrowRight } from "lucide-react";
+import { X, ShoppingBag, Plus, Minus, Trash2, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useCartStore } from "@/lib/store/cart";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, buildWhatsappOrderUrl } from "@/lib/utils";
 
 export function CartSlider() {
   const { isOpen, closeCart, items, removeItem, updateQuantity, total } = useCartStore();
@@ -153,16 +153,19 @@ export function CartSlider() {
                   <span className="font-bold text-ink text-lg">{formatPrice(cartTotal)}</span>
                 </div>
                 <p className="text-xs text-ink/35 text-center">
-                  Envío calculado al confirmar el pedido
+                  Envío coordinado por WhatsApp
                 </p>
-                <Link
-                  href="/checkout"
+                <a
+                  href={buildWhatsappOrderUrl(items, cartTotal)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={closeCart}
-                  className="petal-btn petal-btn-primary w-full justify-center"
+                  className="petal-btn w-full justify-center text-white"
+                  style={{ background: "#25D366" }}
                 >
-                  Finalizar Pedido
-                  <ArrowRight size={18} />
-                </Link>
+                  <MessageCircle size={18} />
+                  Hacer Pedido por WhatsApp
+                </a>
                 <Link
                   href="/cart"
                   onClick={closeCart}

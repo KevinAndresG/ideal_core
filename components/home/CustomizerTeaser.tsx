@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Sparkles, ArrowRight, Check } from "lucide-react";
+import { Sparkles, ArrowRight, Check, Clock } from "lucide-react";
 
 const steps = [
   { emoji: "🧺", label: "Elige la base" },
@@ -47,8 +47,8 @@ export function CustomizerTeaser() {
                 color: "var(--color-violet-dark)",
               }}
             >
-              <Sparkles size={14} />
-              Personalización en Vivo
+              <Clock size={14} />
+              Próximamente
             </div>
 
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-ink mb-6 leading-tight">
@@ -58,8 +58,8 @@ export function CustomizerTeaser() {
             </h2>
 
             <p className="text-ink/55 text-lg leading-relaxed mb-8">
-              Usa nuestro personalizador interactivo para elegir cada detalle de tu regalo.
-              Ve cómo queda mientras lo construyes.
+              Estamos preparando un personalizador interactivo para que armes tu regalo
+              en tiempo real. ¡Muy pronto disponible!
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
@@ -95,10 +95,10 @@ export function CustomizerTeaser() {
               <motion.span
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="petal-btn petal-btn-primary inline-flex items-center gap-3 text-base px-8 py-4 cursor-pointer"
+                className="petal-btn petal-btn-secondary inline-flex items-center gap-3 text-base px-8 py-4 cursor-pointer"
               >
                 <Sparkles size={18} />
-                ¡Armar mi Ancheta Ahora!
+                Saber más
               </motion.span>
             </Link>
           </motion.div>
@@ -152,15 +152,15 @@ export function CustomizerTeaser() {
                 </motion.div>
               </div>
 
-              {/* Live badge */}
+              {/* Coming soon badge */}
               <motion.div
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
                 className="absolute top-5 right-5 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold text-white"
-                style={{ background: "rgba(232, 121, 160, 0.92)" }}
+                style={{ background: "rgba(139, 92, 246, 0.92)" }}
               >
-                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                EN VIVO
+                <Clock size={12} />
+                PRÓXIMAMENTE
               </motion.div>
             </div>
           </motion.div>

@@ -2,9 +2,9 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ShoppingBag, ArrowRight, ArrowLeft, Trash2, Plus, Minus, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowLeft, Trash2, Plus, Minus, MessageCircle } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, buildWhatsappOrderUrl } from "@/lib/utils";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, total, clearCart } = useCartStore();
@@ -134,20 +134,6 @@ export default function CartPage() {
                 ))}
               </AnimatePresence>
 
-              {/* Customizer CTA */}
-              <Link href="/customize">
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  className="petal-card petal-card-violet p-5 flex items-center gap-4 cursor-pointer group"
-                >
-                  <div className="text-3xl">✨</div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-ink text-sm">¿Quieres algo único?</p>
-                    <p className="text-ink/45 text-xs">Arma tu ancheta personalizada desde cero</p>
-                  </div>
-                  <ArrowRight size={18} className="text-ink/35 group-hover:text-ink transition-colors" />
-                </motion.div>
-              </Link>
             </div>
 
             {/* Summary */}
@@ -164,7 +150,7 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-ink/55">Envío</span>
-                    <span className="text-bloom-dark font-semibold">Por calcular</span>
+                    <span className="text-bloom-dark font-semibold">Coordinado por WhatsApp</span>
                   </div>
                 </div>
 
@@ -177,19 +163,21 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <Link href="/checkout">
-                  <motion.span
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="petal-btn petal-btn-primary w-full justify-center block text-center cursor-pointer"
-                  >
-                    <ShoppingBag size={18} className="inline mr-2" />
-                    Finalizar Pedido
-                  </motion.span>
-                </Link>
+                <motion.a
+                  href={buildWhatsappOrderUrl(items, cartTotal)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="petal-btn w-full justify-center block text-center cursor-pointer text-white"
+                  style={{ background: "#25D366" }}
+                >
+                  <MessageCircle size={18} className="inline mr-2" />
+                  Hacer Pedido por WhatsApp
+                </motion.a>
 
                 <div className="mt-4 space-y-2">
-                  {["Pago 100% seguro", "Devolución en 7 días", "Soporte 24/7"].map((f) => (
+                  {["Atención personalizada", "Envío en 24-48h", "Pago al recibir o transferencia"].map((f) => (
                     <div key={f} className="flex items-center gap-2 text-xs text-ink/45">
                       <span className="w-4 h-4 rounded-full bg-bloom/15 flex items-center justify-center text-bloom-dark">
                         ✓

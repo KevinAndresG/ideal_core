@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ShoppingBag, Star, ArrowLeft, Check, Sparkles, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { useCartStore } from "@/lib/store/cart";
@@ -11,17 +12,13 @@ import { ProductCard } from "@/components/products/ProductCard";
 import type { Product } from "@/lib/data/products";
 
 const categoryEmojis: Record<string, string> = {
-  anchetas: "🎁", flores: "🌸", velas: "🕯️",
-  decoraciones: "✨", sets: "💝", manualidades: "🎨",
+  anchetas: "🎁",
+  bouquets: "💐",
 };
 
 const categoryGradients: Record<string, string> = {
-  anchetas:    "from-peach-light to-peach",
-  flores:      "from-rose-light to-rose",
-  velas:       "from-violet-light to-lilac",
-  decoraciones:"from-sky-light to-sky",
-  sets:        "from-mist-dark to-butter-light",
-  manualidades:"from-mint-light to-mint",
+  anchetas: "from-peach-light to-peach",
+  bouquets: "from-rose-light to-rose",
 };
 
 export function ProductDetail({ product, related }: { product: Product; related: Product[] }) {
@@ -58,14 +55,25 @@ export function ProductDetail({ product, related }: { product: Product; related:
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className={`petal-card aspect-square bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden`}>
-              <motion.span
-                animate={{ y: [0, -12, 0], rotate: [0, 3, -3, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="text-[160px] select-none"
-              >
-                {categoryEmojis[product.category] ?? "🎁"}
-              </motion.span>
+            <div className={`petal-card aspect-square bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden relative`}>
+              {product.images[0] ? (
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                  priority
+                />
+              ) : (
+                <motion.span
+                  animate={{ y: [0, -12, 0], rotate: [0, 3, -3, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="text-[160px] select-none"
+                >
+                  {categoryEmojis[product.category] ?? "🎁"}
+                </motion.span>
+              )}
             </div>
           </motion.div>
 

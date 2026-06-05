@@ -2,14 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Share2, ExternalLink, Heart } from "lucide-react";
+import { MessageCircle, Heart } from "lucide-react";
+import { WHATSAPP_NUMBER } from "@/lib/utils";
 
 export function Footer() {
   return (
     <footer
       className="relative overflow-hidden"
       style={{
-        background: "linear-gradient(160deg, #1E0B34 0%, #2D1057 60%, #1A0B2E 100%)",
+        background:
+          "linear-gradient(160deg, #1E0B34 0%, #2D1057 60%, #1A0B2E 100%)",
       }}
     >
       {/* Wave top */}
@@ -25,9 +27,9 @@ export function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-20 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div>
             <Image
               src="/logo.png"
               alt="CORE"
@@ -36,52 +38,31 @@ export function Footer() {
               className="h-10 w-auto object-contain brightness-0 invert mb-4"
             />
             <p className="text-white/60 text-sm leading-relaxed">
-              Regalos únicos hechos con amor, diseñados para crear momentos que
-              perduran.
+              Regala Algo Unico, Regala Algo CORE.
             </p>
-            <div className="flex gap-3 mt-5">
-              <a
-                href="#"
-                aria-label="Compartir"
-                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-white/70 hover:text-white cursor-pointer"
-              >
-                <Share2 size={18} />
-              </a>
-              <a
-                href="#"
-                aria-label="Enlace externo"
-                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-white/70 hover:text-white cursor-pointer"
-              >
-                <ExternalLink size={18} />
-              </a>
-            </div>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-5 px-4 py-2.5 rounded-2xl text-white text-sm font-semibold transition-transform hover:scale-105"
+              style={{ background: "#25D366" }}
+            >
+              <MessageCircle size={16} />
+              Escríbenos por WhatsApp
+            </a>
           </div>
 
           {/* Links */}
           <div>
             <h4 className="text-white font-semibold mb-4">Productos</h4>
             <ul className="space-y-2">
-              {["Anchetas", "Flores Preservadas", "Velas Artesanales", "Sets", "Decoraciones"].map((item) => (
-                <li key={item}>
-                  <Link
-                    href="/products"
-                    className="text-white/60 hover:text-white text-sm transition-colors"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-4">Empresa</h4>
-            <ul className="space-y-2">
               {[
-                { label: "Nosotros",    href: "/about" },
-                { label: "Personalizar", href: "/customize" },
-                { label: "Blog",         href: "#" },
-                { label: "Contacto",     href: "#" },
+                {
+                  label: "Bouquets & Ramos",
+                  href: "/products?category=bouquets",
+                },
+                { label: "Anchetas", href: "/products?category=anchetas" },
+                { label: "Todos", href: "/products" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
@@ -95,26 +76,27 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Newsletter</h4>
-            <p className="text-white/60 text-sm mb-4">
-              Recibe ideas de regalo e inspiración cada semana.
-            </p>
-            <form className="flex flex-col gap-2" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="tu@email.com"
-                aria-label="Email para newsletter"
-                className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm outline-none focus:border-petal/60 transition-colors"
-              />
-              <button
-                type="submit"
-                className="petal-btn petal-btn-primary text-sm py-2.5 w-full justify-center cursor-pointer"
-              >
-                Suscribirme
-              </button>
-            </form>
+            <h4 className="text-white font-semibold mb-4">Empresa</h4>
+            <ul className="space-y-2">
+              {[
+                { label: "Nosotros", href: "/about" },
+                { label: "Personalizar · Pronto", href: "/customize" },
+                {
+                  label: "Contacto WhatsApp",
+                  href: `https://wa.me/${WHATSAPP_NUMBER}`,
+                },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="text-white/60 hover:text-white text-sm transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -123,7 +105,8 @@ export function Footer() {
             © {new Date().getFullYear()} CORE. Todos los derechos reservados.
           </p>
           <p className="text-white/40 text-xs flex items-center gap-1">
-            Hecho con <Heart size={12} className="text-rose fill-rose mx-0.5" /> en Colombia
+            Hecho con <Heart size={12} className="text-rose fill-rose mx-0.5" />{" "}
+            en Colombia
           </p>
         </div>
       </div>
