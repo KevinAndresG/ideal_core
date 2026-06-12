@@ -3,7 +3,7 @@
 import { useActionState, useState, type ChangeEvent } from "react";
 import type { Product } from "@/lib/data/products";
 import type { ProductFormState } from "@/lib/actions/product-actions";
-import { uploadProductImage } from "@/lib/actions/upload-actions";
+import { getSignedUploadUrl, verifyUpload } from "@/lib/actions/upload-actions";
 
 type ProductAction = (
   prevState: ProductFormState,
@@ -33,14 +33,32 @@ export function ProductForm({
     setUploadError(null);
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const result = await uploadProductImage(formData);
-      if (result.error) {
-        setUploadError(result.error);
-      } else if (result.url) {
-        setImages((prev) => [...prev, result.url!]);
+      // Step 1: get server-generated signed URL (no client values trusted)
+      const { signedUrl, path, error: signError } = await getSignedUploadUrl();
+      if (signError || !signedUrl || !path) {
+        setUploadError(signError ?? "Error al preparar la subida.");
+        return;
       }
+
+      // Step 2: upload directly to Supabase Storage (bypasses Netlify serverless)
+      const res = await fetch(signedUrl, {
+        method: "PUT",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+      if (!res.ok) {
+        setUploadError("No se pudo subir la imagen. Intenta de nuevo.");
+        return;
+      }
+
+      // Step 3: server validates actual mime/size from storage metadata, deletes if invalid
+      const { publicUrl, error: verifyError } = await verifyUpload(path);
+      if (verifyError || !publicUrl) {
+        setUploadError(verifyError ?? "La imagen no pasó la verificación.");
+        return;
+      }
+
+      setImages((prev) => [...prev, publicUrl]);
     } catch {
       setUploadError("No se pudo subir la imagen. Intenta de nuevo.");
     } finally {
