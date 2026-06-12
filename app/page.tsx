@@ -4,14 +4,17 @@ import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { Marquee } from "@/components/home/Marquee";
 import { CustomizerTeaser } from "@/components/home/CustomizerTeaser";
 import { Testimonials } from "@/components/home/Testimonials";
+import { getFeaturedProducts } from "@/lib/data/products";
 
-export default function Home() {
+export default async function Home() {
+  const featured = await getFeaturedProducts();
+
   return (
     <>
       <Hero />
       {/* <Categories /> */}
       <Marquee />
-      <FeaturedProducts />
+      <FeaturedProducts featured={featured} />
       <CustomizerTeaser />
       <Testimonials />
     </>

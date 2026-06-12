@@ -1,10 +1,9 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { RotateCcw } from "lucide-react";
+import { Loader2, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { useCustomizerStore } from "@/lib/store/customizer";
-import { formatPrice } from "@/lib/utils";
 
 const itemPositions = [
   { x: 35, y: 55 }, { x: 55, y: 50 }, { x: 25, y: 65 },
@@ -16,6 +15,15 @@ const itemPositions = [
 export function CustomizerCanvas() {
   const { base, items, label, ribbonColor } = useCustomizerStore();
   const [rotated, setRotated] = useState(false);
+
+  if (!base || !ribbonColor) {
+    return (
+      <div className="flex flex-col h-full items-center justify-center gap-3 p-6 min-h-[420px]">
+        <Loader2 className="animate-spin text-ink/30" size={28} />
+        <p className="text-sm text-ink/45">Cargando vista previa...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full gap-4">

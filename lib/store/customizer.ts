@@ -1,15 +1,22 @@
 "use client";
 
 import { create } from "zustand";
-import type { CustomizerBase, CustomizerItem, RibbonColor } from "@/lib/data/customizer-items";
-import { customizerBases, ribbonColors } from "@/lib/data/customizer-items";
+import type {
+  CustomizerBase,
+  CustomizerConfig,
+  CustomizerItem,
+  RibbonColor,
+} from "@/lib/data/customizer-items";
 
 interface CustomizerStore {
-  base: CustomizerBase;
+  // Configuración cargada desde Supabase (bases, items, lazos, categorías).
+  config: CustomizerConfig | null;
+  base: CustomizerBase | null;
   items: CustomizerItem[];
   label: string;
-  ribbonColor: RibbonColor;
+  ribbonColor: RibbonColor | null;
   step: number;
+  setConfig: (config: CustomizerConfig) => void;
   setBase: (base: CustomizerBase) => void;
   addItem: (item: CustomizerItem) => void;
   removeItem: (itemId: string) => void;
@@ -20,15 +27,20 @@ interface CustomizerStore {
   totalPrice: () => number;
 }
 
-const defaultBase = customizerBases[0];
-const defaultRibbon = ribbonColors[0];
-
 export const useCustomizerStore = create<CustomizerStore>((set, get) => ({
-  base: defaultBase,
+  config: null,
+  base: null,
   items: [],
   label: "",
-  ribbonColor: defaultRibbon,
+  ribbonColor: null,
   step: 0,
+
+  setConfig: (config) =>
+    set((state) => ({
+      config,
+      base: state.base ?? config.bases[0] ?? null,
+      ribbonColor: state.ribbonColor ?? config.ribbonColors[0] ?? null,
+    })),
 
   setBase: (base) => set({ base }),
   addItem: (item) => set((state) => ({ items: [...state.items, item] })),
@@ -43,14 +55,21 @@ export const useCustomizerStore = create<CustomizerStore>((set, get) => ({
   setLabel: (label) => set({ label }),
   setRibbonColor: (ribbonColor) => set({ ribbonColor }),
   setStep: (step) => set({ step }),
-  reset: () => set({ base: defaultBase, items: [], label: "", ribbonColor: defaultRibbon, step: 0 }),
+  reset: () =>
+    set((state) => ({
+      base: state.config?.bases[0] ?? null,
+      items: [],
+      label: "",
+      ribbonColor: state.config?.ribbonColors[0] ?? null,
+      step: 0,
+    })),
 
   totalPrice: () => {
     const { base, items, ribbonColor } = get();
     return (
-      base.basePrice +
+      (base?.basePrice ?? 0) +
       items.reduce((sum, item) => sum + item.price, 0) +
-      ribbonColor.price
+      (ribbonColor?.price ?? 0)
     );
   },
 }));

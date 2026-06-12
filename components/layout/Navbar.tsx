@@ -11,19 +11,19 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/",          label: "Inicio" },
-  { href: "/products",  label: "Productos" },
+  { href: "/", label: "Inicio" },
+  { href: "/products", label: "Productos" },
   { href: "/customize", label: "Personalizar · Pronto" },
-  { href: "/about",     label: "Nosotros" },
+  { href: "/about", label: "Nosotros" },
 ];
 
 export function Navbar() {
-  const [scrolled, setScrolled]       = useState(false);
-  const [mobileOpen, setMobileOpen]   = useState(false);
-  const [mounted, setMounted]         = useState(false);
-  const pathname                       = usePathname();
-  const { openCart, itemCount }        = useCartStore();
-  const count                          = mounted ? itemCount() : 0;
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+  const { openCart, itemCount } = useCartStore();
+  const count = mounted ? itemCount() : 0;
 
   useEffect(() => {
     setMounted(true);
@@ -53,9 +53,9 @@ export function Navbar() {
               <Image
                 src="/logo.png"
                 alt="CORE"
-                width={100}
-                height={40}
-                className="h-8 w-auto object-contain dark:brightness-0 dark:invert"
+                width={50}
+                height={50}
+                className="object-contain dark:brightness-0 dark:invert"
                 priority
               />
             </motion.div>

@@ -1,17 +1,12 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { Plus, Minus, ShoppingBag, RotateCcw, ChevronRight, ChevronLeft } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Plus, Minus, ShoppingBag, RotateCcw, ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useCustomizerStore } from "@/lib/store/customizer";
 import { useCartStore } from "@/lib/store/cart";
-import {
-  customizerBases,
-  customizerItems,
-  ribbonColors,
-  itemCategories,
-} from "@/lib/data/customizer-items";
+import { fetchCustomizerConfig } from "@/lib/data/customizer-items";
 import { formatPrice } from "@/lib/utils";
 
 const steps = [
@@ -23,6 +18,7 @@ const steps = [
 
 export function CustomizerControls() {
   const {
+    config, setConfig,
     base, setBase,
     items, addItem, removeItem,
     label, setLabel,
@@ -31,11 +27,20 @@ export function CustomizerControls() {
     reset, totalPrice,
   } = useCustomizerStore();
   const { addItem: addToCart, openCart } = useCartStore();
-  const [activeCategory, setActiveCategory] = useState(itemCategories[0]);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState(false);
+
+  useEffect(() => {
+    if (config) return;
+    fetchCustomizerConfig()
+      .then(setConfig)
+      .catch(() => setLoadError(true));
+  }, [config, setConfig]);
 
   const price = totalPrice();
 
   const handleAddToCart = () => {
+    if (!base || !ribbonColor) return;
     if (items.length === 0) {
       toast.error("Agrega al menos 1 item a tu ancheta");
       return;
@@ -56,7 +61,28 @@ export function CustomizerControls() {
     return acc;
   }, {});
 
-  const filteredItems = customizerItems.filter((i) => i.category === activeCategory);
+  if (loadError) {
+    return (
+      <div className="flex flex-col h-full items-center justify-center text-center gap-2 p-6">
+        <p className="text-sm text-ink/55">
+          No pudimos cargar el personalizador. Intenta de nuevo más tarde.
+        </p>
+      </div>
+    );
+  }
+
+  if (!config || !base || !ribbonColor) {
+    return (
+      <div className="flex flex-col h-full items-center justify-center gap-3 p-6">
+        <Loader2 className="animate-spin text-ink/30" size={28} />
+        <p className="text-sm text-ink/45">Cargando personalizador...</p>
+      </div>
+    );
+  }
+
+  const categories = config.itemCategories;
+  const currentCategory = activeCategory ?? categories[0] ?? "";
+  const filteredItems = config.items.filter((i) => i.category === currentCategory);
 
   return (
     <div className="flex flex-col h-full gap-4">
@@ -93,7 +119,7 @@ export function CustomizerControls() {
             {step === 0 && (
               <div className="space-y-3">
                 <p className="text-sm text-ink/55 mb-4">Elige el contenedor para tu regalo</p>
-                {customizerBases.map((b) => (
+                {config.bases.map((b) => (
                   <motion.button
                     key={b.id}
                     whileHover={{ x: 4 }}
@@ -123,12 +149,12 @@ export function CustomizerControls() {
 
                 {/* Category tabs */}
                 <div className="flex gap-1.5 flex-wrap mb-4">
-                  {itemCategories.map((cat) => (
+                  {categories.map((cat) => (
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
                       className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                        activeCategory === cat
+                        currentCategory === cat
                           ? "bg-bloom text-white shadow-sm shadow-bloom/30"
                           : "bg-surface text-ink/55 hover:bg-bloom/10 border border-bloom/12"
                       }`}
@@ -221,7 +247,7 @@ export function CustomizerControls() {
               <div className="space-y-3">
                 <p className="text-sm text-ink/55">Elige el color del lazo</p>
                 <div className="grid grid-cols-2 gap-2">
-                  {ribbonColors.map((rc) => (
+                  {config.ribbonColors.map((rc) => (
                     <motion.button
                       key={rc.id}
                       whileHover={{ scale: 1.03 }}

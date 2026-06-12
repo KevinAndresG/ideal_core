@@ -176,9 +176,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-ink/55 text-lg sm:text-xl max-w-2xl mx-auto mb-5 leading-relaxed"
         >
-          Anchetas personalizadas, flores preservadas y manualidades únicas.{" "}
-          <strong className="text-ink/75">Arma tu regalo en vivo</strong> y ve
-          cómo queda antes de ordenarlo.
+          <strong className="text-ink/75">
+            Anchetas personalizadas, flores eternas y manualidades únicas.
+          </strong>
         </motion.p>
 
         {/* CTAs with magnetic effect */}

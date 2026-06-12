@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { Footer } from "@/components/layout/Footer";
-import { CartSlider } from "@/components/layout/CartSlider";
-import { Toaster } from "sonner";
-import { Navbar } from "@/components/layout/Navbar";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -41,23 +38,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="min-h-screen flex flex-col overflow-x-hidden">
-        <Navbar />
-        <CartSlider />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "var(--surface-solid)",
-              border: "1.5px solid rgba(196, 181, 253, 0.35)",
-              borderRadius: "18px",
-              fontFamily: "Inter, system-ui, sans-serif",
-              color: "var(--color-ink)",
-              boxShadow: "0 8px 32px rgba(139, 92, 246, 0.12)",
-            },
-          }}
-        />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

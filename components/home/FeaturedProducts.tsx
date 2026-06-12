@@ -4,11 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/products/ProductCard";
-import { getFeaturedProducts } from "@/lib/data/products";
+import type { Product } from "@/lib/data/products";
 
-export function FeaturedProducts() {
-  const featured = getFeaturedProducts();
-
+export function FeaturedProducts({ featured }: { featured: Product[] }) {
   return (
     <section className="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
       <div className="flex items-end justify-between mb-12">
