@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingBag, Star, ArrowLeft, Check, Sparkles, Heart } from "lucide-react";
+import { ShoppingBag, Star, ArrowLeft, Check, Sparkles, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { useCartStore } from "@/lib/store/cart";
 import { formatPrice } from "@/lib/utils";
@@ -25,7 +25,18 @@ export function ProductDetail({ product, related }: { product: Product; related:
   const [qty, setQty]           = useState(1);
   const [customText, setCustomText] = useState("");
   const [liked, setLiked]       = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
   const { addItem, openCart }   = useCartStore();
+
+  const images = product.images.length > 0 ? product.images : [];
+  const hasMany = images.length > 1;
+
+  function prevImg() {
+    setImgIndex((i) => (i - 1 + images.length) % images.length);
+  }
+  function nextImg() {
+    setImgIndex((i) => (i + 1) % images.length);
+  }
 
   const handleAdd = () => {
     addItem({ type: "product", product, quantity: qty, unitPrice: product.price, customText: customText || undefined });
@@ -49,22 +60,66 @@ export function ProductDetail({ product, related }: { product: Product; related:
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          {/* Image */}
+          {/* Image carousel */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
+            className="flex flex-col gap-3"
           >
+            {/* Main image */}
             <div className={`petal-card aspect-square bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden relative`}>
-              {product.images[0] ? (
-                <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                  priority
-                />
+              {images.length > 0 ? (
+                <>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={imgIndex}
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -30 }}
+                      transition={{ duration: 0.25 }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={images[imgIndex]}
+                        alt={`${product.name} — imagen ${imgIndex + 1}`}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover"
+                        priority={imgIndex === 0}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {hasMany && (
+                    <>
+                      <button
+                        onClick={prevImg}
+                        aria-label="Imagen anterior"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-ink rounded-full p-1.5 shadow transition-all cursor-pointer"
+                      >
+                        <ChevronLeft size={20} />
+                      </button>
+                      <button
+                        onClick={nextImg}
+                        aria-label="Imagen siguiente"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-ink rounded-full p-1.5 shadow transition-all cursor-pointer"
+                      >
+                        <ChevronRight size={20} />
+                      </button>
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                        {images.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setImgIndex(i)}
+                            aria-label={`Ir a imagen ${i + 1}`}
+                            className={`w-2 h-2 rounded-full transition-all cursor-pointer ${i === imgIndex ? "bg-white scale-125" : "bg-white/50 hover:bg-white/80"}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </>
               ) : (
                 <motion.span
                   animate={{ y: [0, -12, 0], rotate: [0, 3, -3, 0] }}
@@ -75,6 +130,32 @@ export function ProductDetail({ product, related }: { product: Product; related:
                 </motion.span>
               )}
             </div>
+
+            {/* Thumbnail strip */}
+            {hasMany && (
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {images.map((src, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setImgIndex(i)}
+                    aria-label={`Ver imagen ${i + 1}`}
+                    className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                      i === imgIndex
+                        ? "border-bloom shadow-md"
+                        : "border-transparent opacity-60 hover:opacity-100"
+                    }`}
+                  >
+                    <Image
+                      src={src}
+                      alt={`Miniatura ${i + 1}`}
+                      width={64}
+                      height={64}
+                      className="object-cover w-full h-full"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Info */}
