@@ -5,6 +5,13 @@ import Link from "next/link";
 import { MessageCircle, Heart } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/utils";
 
+const socials = [
+  { name: "WhatsApp", href: "https://wa.me/c/573245655193", icon: "/Redes/Whatsapp.png" },
+  { name: "Instagram", href: "https://www.instagram.com/ideal_core?igsh=MXN1OHlldGVyYmg5dA==", icon: "/Redes/instagram.png" },
+  { name: "Facebook", href: "https://www.facebook.com/share/18epsAvGtE/", icon: "/Redes/facebook.png" },
+  { name: "TikTok", href: "https://www.tiktok.com/@ideal_core?_r=1&_t=ZS-97ATsuzdDLl", icon: "/Redes/tik-tok.png" },
+];
+
 export function Footer() {
   return (
     <footer
@@ -100,10 +107,24 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/40 text-xs">
             © {new Date().getFullYear()} CORE. Todos los derechos reservados.
           </p>
+          <div className="flex items-center gap-3">
+            {socials.map((s) => (
+              <a
+                key={s.name}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.name}
+                className="opacity-60 hover:opacity-100 transition-opacity hover:scale-110 transition-transform"
+              >
+                <Image src={s.icon} alt={s.name} width={22} height={22} className="object-contain" />
+              </a>
+            ))}
+          </div>
           <p className="text-white/40 text-xs flex items-center gap-1">
             Hecho con <Heart size={12} className="text-rose fill-rose mx-0.5" />{" "}
             en Colombia

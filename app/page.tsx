@@ -4,6 +4,7 @@ import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { Marquee } from "@/components/home/Marquee";
 import { CustomizerTeaser } from "@/components/home/CustomizerTeaser";
 import { Testimonials } from "@/components/home/Testimonials";
+import { Contact } from "@/components/home/Contact";
 import { getFeaturedProducts } from "@/lib/data/products";
 
 export default async function Home() {
@@ -17,6 +18,7 @@ export default async function Home() {
       <FeaturedProducts featured={featured} />
       <CustomizerTeaser />
       <Testimonials />
+      <Contact />
     </>
   );
 }
